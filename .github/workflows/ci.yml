@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install backend
+        run: npm install --prefix backend
+
+      - name: Typecheck backend
+        run: npm --prefix backend run typecheck
+
+      - name: Install frontend
+        run: npm install --prefix frontend
+
+      - name: Typecheck frontend
+        run: npm --prefix frontend run typecheck
